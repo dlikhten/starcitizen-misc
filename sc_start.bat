@@ -52,4 +52,4 @@ echo "%launcher_path%\RSI Launcher.exe"
 call %~dp0/backup_files.bat
 
 :: close the darn window when you exit
-:: exit
+exit
