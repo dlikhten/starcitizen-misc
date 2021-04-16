@@ -4,7 +4,7 @@
 :: ********                                                                        ********
 :: **                   DISCLAIMER: PLEASE READ CAREFULLY BEFORE USE.                    **
 :: **        By using this file you understand that personal use and modification        **
-:: **          of file contents should be done at your own discretion and risk.          **  
+:: **          of file contents should be done at your own discretion and risk.          **
 :: ********                                                                        ********
 :: ****************************************************************************************
 :: ****____*____****____*____*__**____*____********************(*****(*********************
@@ -16,59 +16,51 @@
 :: ***********************************************| '_ | || |**| |) |   /  / _ \  | (__****
 :: ***********************************************|_.__/\_, |**|___/|_|_\ /_/ \_\  \___|***
 :: *****************************************************|__/*******************************
-:: ****************************************************************************************                                              
+:: ****************************************************************************************
 :: ****************************************************************************************
 :: *****************   This file is to help with launching Star Citizen   *****************
 :: *************   Automatic shader deletion and control mapping sync between   ***********
-:: ****************   LIVE and PTU envirovements   -  Made by Draconous   *****************
+:: *************   LIVE and PTU envirovements   -  Made by Draconous / Wizywig   **********
 :: ********************                  3.13 AND LATER           *************************
 :: ****************************************************************************************
 :: *******************************    INSTRUCTIONS      ***********************************
 ::
-:: Create folders and back up Control Mappings at "\Roberts Space Industries\Download\Controls\Mappings\" 
+:: 1 - Change the paths in config.txt to be whatever is appropriate on your hard drive.
+::     You can copy from the path part of windows explorer and just paste it into there
 ::
-:: You will need to change the directory structure to where you installed Star Citizen.
+:: -   Run backup_files.bat first before doing anything otherwise you *YOU WILL LOSE THEM OTHERWISE*
 ::
-:: It's not fancy and kept very simple on purpose. Do not run the .bat until control mappings are backed up *YOU WILL LOSE THEM OTHERWISE*
-::
-:: You can also drop this FileName.bat file in any directoy then right click it and send link to Desktop and start it from there.
+:: right click on this file and send link to Desktop and start it from there.
 ::
 :: ****************************************************************************************
-:: *********************************    EXAMPLE    ****************************************
-:: ****************************************************************************************
-::
-::      ~~~~~~~~~~~~
-:: del "Drive:\path\Roberts Space Industries\StarCitizen\LIVE\USER\Client\0\Controls\Mappings\*.*"
-::      ~~~~~~~~~~~~
-::
-:: *****************************************************************************************
-:: *****************************************************************************************
-::
-::
-:: *****************************************************************************************
-:: ************** Put a <::> in front of the lines below after the first run ***************
-:: *****************************************************************************************
-::
-copy /y "G:\Gaming\Roberts Space Industries\StarCitizen\LIVE\USER\Client\0\Controls\Mappings\*.*" "G:\Gaming\Roberts Space Industries\Download\Controls\Mappings\*.*"
-copy /y "G:\Gaming\Roberts Space Industries\StarCitizen\LIVE\USER\Controls\Mappings\*.*" "G:\Gaming\Roberts Space Industries\Download\Controls\Mappings\*.*"
-::
-:: *****************************************************************************************
-:: *****************************************************************************************
 
-del /Q "G:\Gaming\Roberts Space Industries\StarCitizen\LIVE\USER\Client\0\Controls\Mappings\*.*"
 
-del /Q "G:\Gaming\Roberts Space Industries\StarCitizen\PTU\USER\Client\0\Controls\Mappings\*.*"
+for /f "delims=" %%x in (%~dp0/config.txt) do (set "%%x")
 
-copy /y "G:\Gaming\Roberts Space Industries\Download\Controls\Mappings\*.*" "G:\Gaming\Roberts Space Industries\StarCitizen\LIVE\USER\Client\0\Controls\Mappings\*.*"
+:: delete old mappings
+del /Q "%star_citizen_path%\LIVE\USER\Client\0\Controls\Mappings\*.*"
+del /Q "%star_citizen_path%\LIVE\USER\Controls\Mappings\*.*"
+del /Q "%star_citizen_path%\PTU\USER\Client\0\Controls\Mappings\*.*"
+del /Q "%star_citizen_path%\PTU\USER\Controls\Mappings\*.*"
 
-copy /y "G:\Gaming\Roberts Space Industries\Download\Controls\Mappings\*.*" "G:\Gaming\Roberts Space Industries\StarCitizen\PTU\USER\Client\0\Controls\Mappings\*.*"
+:: copy all mappings over
+copy /y "%backup_config_path%\Controls\Mappings\*.*" "%star_citizen_path%\LIVE\USER\Client\0\Controls\Mappings\*.*"
+copy /y "%backup_config_path%\Controls\Mappings\*.*" "%star_citizen_path%\LIVE\USER\Controls\Mappings\*.*"
+copy /y "%backup_config_path%\Controls\Mappings\*.*" "%star_citizen_path%\PTU\USER\Client\0\Controls\Mappings\*.*"
+copy /y "%backup_config_path%\Controls\Mappings\*.*" "%star_citizen_path%\PTU\USER\Controls\Mappings\*.*"
 
-rmdir /s /Q "G:\Gaming\Roberts Space Industries\StarCitizen\LIVE\USER\Client\0\shaders"
+:: delete all shaders
+rmdir /s /Q "%star_citizen_path%\LIVE\USER\Client\0\shaders"
+rmdir /s /Q "%star_citizen_path%\LIVE\USER\shaders"
+rmdir /s /Q "%star_citizen_path%\PTU\USER\Client\0\shaders"
+rmdir /s /Q "%star_citizen_path%\PTU\USER\shaders"
 
-rmdir /s /Q "G:\Gaming\Roberts Space Industries\StarCitizen\PTU\USER\Client\0\shaders"
+:: launch sc
+echo "%launcher_path%\RSI Launcher.exe"
+"%launcher_path%\RSI Launcher.exe"		:: I didn't use the start command on purpose
 
-"G:\Gaming\Roberts Space Industries\RSI Launcher\RSI Launcher.exe"		:: I didn't use the start command on purpose
+:: backup all configs on exit!
+:: call %~dp0/backup_files.bat
 
-copy /y "G:\Gaming\Roberts Space Industries\StarCitizen\LIVE\USER\Client\0\Controls\Mappings\*.*" "G:\Gaming\Roberts Space Industries\Download\Controls\Mappings\*.*"
-
-exit 										:: this will close the command window when you exit the Launcher
+:: close the darn window when you exit
+:: exit
