@@ -21,19 +21,8 @@
 :: *****************   This file is to help with launching Star Citizen   *****************
 :: *************   Automatic shader deletion and control mapping sync between   ***********
 :: *************   LIVE and PTU envirovements   -  Made by Draconous / Wizywig   **********
-:: ********************                  3.13 AND LATER           *************************
+:: ********************                  3.12 AND LATER           *************************
 :: ****************************************************************************************
-:: *******************************    INSTRUCTIONS      ***********************************
-::
-:: 1 - Change the paths in config.txt to be whatever is appropriate on your hard drive.
-::     You can copy from the path part of windows explorer and just paste it into there
-::
-:: -   Run backup_files.bat first before doing anything otherwise you *YOU WILL LOSE THEM OTHERWISE*
-::
-:: right click on this file and send link to Desktop and start it from there.
-::
-:: ****************************************************************************************
-
 
 for /f "delims=" %%x in (%~dp0/config.txt) do (set "%%x")
 
