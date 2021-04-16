@@ -60,7 +60,7 @@ echo "%launcher_path%\RSI Launcher.exe"
 "%launcher_path%\RSI Launcher.exe"		:: I didn't use the start command on purpose
 
 :: backup all configs on exit!
-:: call %~dp0/backup_files.bat
+call %~dp0/backup_files.bat
 
 :: close the darn window when you exit
 :: exit
